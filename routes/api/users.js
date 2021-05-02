@@ -50,6 +50,7 @@ let avatar = gravatar.url(email, {
     email: email,
     avatar: avatar
  });
+ 
 // encrypting the password
  const salt = await bcrypt.genSalt(10);
  user.password = await bcrypt.hash(password, salt);
@@ -57,7 +58,6 @@ let avatar = gravatar.url(email, {
 // saving the user
 
 await user.save();
-
 
 // Return jsonwebtoken - set up the payload - for this purposes, only the User ID is requred.
 const payload = {
