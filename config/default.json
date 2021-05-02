@@ -1,3 +1,4 @@
 {
-    "mongoURI" :"mongodb+srv://yousef:yousef123@devconnector.ak8xm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "mongoURI" :"mongodb+srv://yousef:yousef123@devconnector.ak8xm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "privateToken" :"thisshitisreal."
 }

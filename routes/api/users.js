@@ -4,6 +4,8 @@ const {body, validationResult} = require("express-validator");
 const User = require("../../models/Users");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 
 // @route     POST api/users
 // @desc      TEST route
@@ -53,9 +55,27 @@ let avatar = gravatar.url(email, {
  user.password = await bcrypt.hash(password, salt);
 
 // saving the user
+
 await user.save();
 
-// Return jsonwebtoken
+
+// Return jsonwebtoken - set up the payload - for this purposes, only the User ID is requred.
+const payload = {
+    userid: user.id
+};
+
+
+//Setup and return the Payload.
+jwt.sign(payload,
+    config.get("privateToken"),
+    { expiresIn: 360000 },
+    (err,token) => {
+        if (err)
+            throw err;
+            res.json({token});
+    });
+
+
 }
 
 // records any server failure. 
@@ -64,7 +84,6 @@ catch(err) {
     return res.status(500).send("server error");
 }
 
-res.send("user Registered");
 });
 
 module.exports = router;
