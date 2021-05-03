@@ -27,6 +27,8 @@ router.get("/", auth, async (req,res)=>{
 
 });
 
+//----------------------------------POST----------------------------------
+
 router.post("/", 
 
 // using express validator to check the req.body parameters in JSON
@@ -55,7 +57,9 @@ try {
    return res.status(400).json({errors:[{message:"Authentication Failed"}]});
  }
 
+ // authenticate user
  const comparePassword =  await bcrypt.compare(password,user.password);
+
 
  if (!comparePassword){
     return res.status(400).json({errors:[{message:"Authentication Failed"}]});
