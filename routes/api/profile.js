@@ -3,6 +3,8 @@ const router = express.Router();
 const auth = require("../../middleware/auth");
 const Profile = require("../../models/Profile");
 const User = require("../../models/Users");
+const {body, validationResult} = require("express-validator");
+const { create } = require("../../models/Profile");
 
 // @route     GET api/profile/me
 // @desc      Get current users profile route
@@ -29,5 +31,86 @@ catch(err){
 }
 
 });
+
+// @route     POST api/profile
+// @desc      POST current users profile route
+// @access    Private 
+
+
+router.post("/",[auth,[
+
+ body('skills','name is required').not().isEmpty(),
+ body('status',"status is required").not().isEmpty()
+]],  
+
+async(req,res)=>{
+
+const errors = validationResult(req);
+if(!errors.isEmpty()){
+return res.status(400).json({errors:errors.array()});
+}
+
+
+const {
+company, 
+status,
+website,
+skills,
+location,
+bio,
+githubusername,
+twitter,
+facebook,
+youtube,
+linkedin,
+instagram
+} = req.body
+
+const createdProfile = {};
+createdProfile.user = req.user.id;
+if (company) createdProfile.company = company;
+if (status) createdProfile.status = status;
+if (website) createdProfile.wesbite = website;
+if (location) createdProfile.location = location;
+if (bio) createdProfile.bio = bio;
+if (githubusername) createdProfile.githubusername = githubusername;
+
+createdProfile.social = {};
+
+if (facebook) createdProfile.social.facebook = facebook;
+if (youtube)  createdProfile.social.youtube = youtube;
+if (linkedin) createdProfile.social.linkedin = linkedin;
+if (twitter) createdProfile.social.twitter = twitter;
+if (instagram) createdProfile.social.instagram = instagram;
+
+if (skills) {
+    createdProfile.skills = skills.split(",").map(skill=> skill.trim());
+}
+
+try{
+    let profile = await Profile.findOne({user: req.user.id});
+
+    if(profile){
+
+        profile = await Profile.findOneAndUpdate({user: req.user.id},{$set :createdProfile},{new :true});
+
+        return res.json(profile);
+    }
+   
+    profile = new Profile(createdProfile);
+
+     await profile.save();
+
+     res.json(profile);
+   
+}
+
+catch(err){
+    console.error(err.message);
+    res.status(500).send("Server Error");
+}
+
+});
+
 
 module.exports = router;
