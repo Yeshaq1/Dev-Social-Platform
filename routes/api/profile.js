@@ -50,7 +50,6 @@ if(!errors.isEmpty()){
 return res.status(400).json({errors:errors.array()});
 }
 
-
 const {
 company, 
 status,
@@ -109,6 +108,59 @@ catch(err){
     console.error(err.message);
     res.status(500).send("Server Error");
 }
+
+});
+
+
+// @route     GET api/profile
+// @desc      GET All profiles
+// @access    Public 
+
+
+router.get("/", async (req, res)=>{
+
+    try {
+        
+        let profiles = await Profile.find().populate("user",['name', 'avatar']);
+
+        res.json(profiles);
+
+    } catch (err) {
+
+        console.error(err.message);
+        return res.status(500).send("Server Error")
+        
+    }
+
+});
+
+
+// @route     GET api/profile/:user_ID
+// @desc      GET specific profile using user ID
+// @access    Public 
+
+
+router.get("/user/:user_id", async (req, res)=>{
+
+    try {
+        
+        let profile = await Profile.findOne({user:req.params.user_id}).populate("user",['name', 'avatar']);
+
+        if(!profile){
+            return res.status(400).json({msg: "profile not found"});
+        }
+
+        res.json(profile);
+
+    } catch (err) {
+
+        console.error(err.message);
+        if(err.kind == "ObjectId"){
+            return res.status(400).json({msg: "profile not found"});
+        }
+        return res.status(500).send("Server Error")
+        
+    }
 
 });
 
