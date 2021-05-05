@@ -4,7 +4,8 @@ const auth = require("../../middleware/auth");
 const Profile = require("../../models/Profile");
 const User = require("../../models/Users");
 const {body, validationResult} = require("express-validator");
-const { create } = require("../../models/Profile");
+const { route } = require("./auth");
+
 
 // @route     GET api/profile/me
 // @desc      Get current users profile route
@@ -26,6 +27,7 @@ try {
 }
 
 catch(err){
+
     console.error(err.message);
     res.status(500).send("Sever Error");
 }
@@ -41,11 +43,13 @@ router.post("/",[auth,[
 
  body('skills','name is required').not().isEmpty(),
  body('status',"status is required").not().isEmpty()
+
 ]],  
 
 async(req,res)=>{
 
 const errors = validationResult(req);
+
 if(!errors.isEmpty()){
 return res.status(400).json({errors:errors.array()});
 }
@@ -83,29 +87,31 @@ if (twitter) createdProfile.social.twitter = twitter;
 if (instagram) createdProfile.social.instagram = instagram;
 
 if (skills) {
+
     createdProfile.skills = skills.split(",").map(skill=> skill.trim());
 }
 
 try{
+
     let profile = await Profile.findOne({user: req.user.id});
 
     if(profile){
 
         profile = await Profile.findOneAndUpdate({user: req.user.id},{$set :createdProfile},{new :true});
-
         return res.json(profile);
     }
    
     profile = new Profile(createdProfile);
 
      await profile.save();
-
      res.json(profile);
    
 }
 
 catch(err){
+
     console.error(err.message);
+
     res.status(500).send("Server Error");
 }
 
@@ -122,13 +128,12 @@ router.get("/", async (req, res)=>{
     try {
         
         let profiles = await Profile.find().populate("user",['name', 'avatar']);
-
         res.json(profiles);
 
     } catch (err) {
 
         console.error(err.message);
-        return res.status(500).send("Server Error")
+        return res.status(500).send("Server Error");
         
     }
 
@@ -147,6 +152,7 @@ router.get("/user/:user_id", async (req, res)=>{
         let profile = await Profile.findOne({user:req.params.user_id}).populate("user",['name', 'avatar']);
 
         if(!profile){
+
             return res.status(400).json({msg: "profile not found"});
         }
 
@@ -155,7 +161,9 @@ router.get("/user/:user_id", async (req, res)=>{
     } catch (err) {
 
         console.error(err.message);
+
         if(err.kind == "ObjectId"){
+
             return res.status(400).json({msg: "profile not found"});
         }
         return res.status(500).send("Server Error")
@@ -164,5 +172,32 @@ router.get("/user/:user_id", async (req, res)=>{
 
 });
 
+// @route     DELETE api/profile/me
+// @desc      DELETE specific profile
+// @access    Private 
+
+router.delete("/", auth, async (req,res)=>{
+
+
+    profile = await Profile.findOne({user: req.user.id});
+
+    if (!profile){
+
+        return res.status(500).json({msg: "Profile not found"});
+    }
+
+try {
+   
+ await Profile.deleteOne({user: req.user.id});
+ await User.deleteOne({_id: req.user.id});
+ 
+ res.send("Profile Deleted");
+
+} catch (err) {
+     console.error(err.message);
+     return res.status(500).send("Server Error")
+}
+    
+});
 
 module.exports = router;
