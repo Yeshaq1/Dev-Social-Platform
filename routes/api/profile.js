@@ -5,6 +5,7 @@ const Profile = require("../../models/Profile");
 const User = require("../../models/Users");
 const {body, validationResult} = require("express-validator");
 const { route } = require("./auth");
+const https = require('https');
 
 
 // @route     GET api/profile/me
@@ -351,6 +352,56 @@ router.put("/education", [auth, [
           return res.status(500).send("Server Error");
       }
     
+    });
+
+    // @route     GET api/profile/github/:username
+    // @desc      GET a Github repos
+    // @access    Public
+    
+    router.get("/github/:username", async (req,res)=>{
+
+    
+         const options = {
+
+            accept: "application/vnd.github.v3+json",
+            headers: {'user-agent': 'node.js'},
+            host: 'api.github.com',
+            path: `/users/${req.params.username}/repos?type=owner&sort=updated&per_page=5`,
+            method : 'GET'
+            
+           }
+    try {
+           // API CALL HERE -------------------------------------------
+         const request =  https.request(options,(response)=>{
+           // SINCE data is recieved as chunks, set up an array to include all the data and only parse the data at the end.
+            const reposChunks = [];
+            if (response.statusCode !== 200){
+                return res.json({msg: "profile not found"});
+            }
+            //collecting data into array
+            response.on("data", function(d){
+             reposChunks.push(d);
+               
+            });
+            // on end parsing the data
+            response.on('end',function(){
+                const buffer = Buffer.concat(reposChunks);
+                let finalRepos = JSON.parse(buffer);
+                res.json(finalRepos);
+            })
+              
+            });
+
+            request.end();
+
+            
+        } catch (err) {
+          console.error(err.message);
+          return res.status(500).send("Server Error");
+            
+        }
+
+
     });
 
 module.exports = router;
