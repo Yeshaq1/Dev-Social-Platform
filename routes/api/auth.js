@@ -24,7 +24,6 @@ router.get("/", auth, async (req,res)=>{
         return res.status(400).json({msg:"Server Error"});
     }
     
-
 });
 
 //----------------------------------POST----------------------------------
