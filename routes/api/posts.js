@@ -106,6 +106,7 @@ router.delete("/:post_id", auth, async (req, res) => {
             });
         }
 
+
         if (post.user.toString() !== req.user.id) {
 
             return res.status(401).json({
