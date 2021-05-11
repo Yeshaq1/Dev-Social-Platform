@@ -11,9 +11,10 @@ function App() {
     <Router>
       <Fragment>
         <Navbar />
-        <Route exact path='/' component={Landing} />
+
         <section className='container'>
           <Switch>
+            <Route exact path='/' component={Landing} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/login' component={Login} />
           </Switch>
