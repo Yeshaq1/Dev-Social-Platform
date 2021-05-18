@@ -43,7 +43,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ errors: [{ message: 'This user is already registered' }] });
+          .json({ errors: [{ msg: 'This user is already registered' }] });
       }
       // setting an avatar using Gravatar
 

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import PropTypes from 'prop-types';
 import Alert from '../layout/Alert';
+import { register } from '../../actions/auth';
 
 const Register = (props) => {
   const [formData, updateFormData] = useState({
@@ -32,7 +33,7 @@ const Register = (props) => {
     if (password !== password2) {
       props.setAlert('The Passwords Do not Match', 'danger');
     } else {
-      console.log('Success');
+      props.register({ name, email, password });
     }
   }
 
@@ -51,7 +52,6 @@ const Register = (props) => {
             placeholder='Name'
             name='name'
             value={name}
-            required
             onChange={handleChange}
           />
         </div>
@@ -61,7 +61,6 @@ const Register = (props) => {
             placeholder='Email Address'
             name='email'
             value={email}
-            required
             onChange={handleChange}
           />
           <small className='form-text'>
@@ -77,7 +76,6 @@ const Register = (props) => {
             minLength='6'
             value={password}
             onChange={handleChange}
-            required
           />
         </div>
         <div className='form-group'>
@@ -88,7 +86,6 @@ const Register = (props) => {
             minLength='6'
             value={password2}
             onChange={handleChange}
-            required
           />
         </div>
         <input type='submit' className='btn btn-primary' value='Register' />
@@ -104,4 +101,4 @@ Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
 };
 
-export default connect(null, { setAlert })(Register);
+export default connect(null, { setAlert, register })(Register);
