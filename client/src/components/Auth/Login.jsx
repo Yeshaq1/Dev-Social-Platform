@@ -1,7 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login } from '../../actions/auth';
+import Alert from '../layout/Alert';
 
-const Login = () => {
+const Login = ({ login }) => {
   const [formData, updateFormData] = useState({
     email: '',
     password: '',
@@ -22,7 +25,7 @@ const Login = () => {
 
   function submit(event) {
     event.preventDefault();
-    console.log('Success');
+    login({ email, password });
   }
 
   return (
@@ -31,6 +34,7 @@ const Login = () => {
       <p className='lead'>
         <i className='fas fa-user'></i> Sign Into Your Account
       </p>
+      <Alert />
       <form className='form' onSubmit={submit}>
         <div className='form-group'>
           <input
@@ -62,4 +66,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default connect(null, { login })(Login);
