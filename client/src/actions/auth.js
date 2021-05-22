@@ -8,6 +8,7 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_PROFILE,
+  LOADER_TRUE,
 } from './types';
 import { setAlert } from './alert';
 import SetAuthToken from '../utils/setAuthToken';
@@ -97,6 +98,10 @@ export const logout = () => (dispatch) => {
   dispatch({
     type: CLEAR_PROFILE,
   });
+  dispatch({
+    type: LOADER_TRUE,
+  });
+
   dispatch({
     type: LOGOUT,
   });

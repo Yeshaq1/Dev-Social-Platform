@@ -14,7 +14,7 @@ const Dashboard = ({
     getProfile();
   }, []);
 
-  return profile === null && Object.keys(error) === 0 ? (
+  return loading && profile === null ? (
     <Spinner />
   ) : (
     <Fragment>
