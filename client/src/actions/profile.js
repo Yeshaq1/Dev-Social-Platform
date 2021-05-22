@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { GET_PROFILE, PROFILE_ERROR } from './types';
-import SetAuthToken from '../utils/setAuthToken';
 import { setAlert } from './alert';
 
 export const getProfile = () => async (dispatch) => {
