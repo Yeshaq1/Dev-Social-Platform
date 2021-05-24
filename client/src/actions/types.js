@@ -11,3 +11,4 @@ export const GET_PROFILE = 'GET_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const LOADER_TRUE = 'LOADER_TRUE';
+export const SAVE_PROFILE = 'SAVE_PROFILE';

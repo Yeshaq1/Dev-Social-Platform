@@ -3,6 +3,7 @@ import {
   PROFILE_ERROR,
   CLEAR_PROFILE,
   LOADER_TRUE,
+  SAVE_PROFILE,
 } from '../actions/types';
 
 const initialState = {
@@ -43,6 +44,14 @@ export default function (state = initialState, action) {
         loading: false,
         profile: null,
         repos: [],
+        error: {},
+      };
+
+    case SAVE_PROFILE:
+      return {
+        ...state,
+        loading: false,
+        profile: payload,
         error: {},
       };
     default:
