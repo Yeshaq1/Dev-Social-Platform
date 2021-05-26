@@ -24,6 +24,7 @@ export default function (state = initialState, action) {
         loading: true,
       };
     case GET_PROFILE:
+    case SAVE_PROFILE:
       return {
         ...state,
         profile: payload,
@@ -44,14 +45,6 @@ export default function (state = initialState, action) {
         loading: false,
         profile: null,
         repos: [],
-        error: {},
-      };
-
-    case SAVE_PROFILE:
-      return {
-        ...state,
-        loading: false,
-        profile: payload,
         error: {},
       };
     default:

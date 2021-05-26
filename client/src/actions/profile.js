@@ -18,40 +18,14 @@ export const getProfile = () => async (dispatch) => {
   }
 };
 
-export const createProfile = ({
-  company,
-  status,
-  website,
-  skills,
-  location,
-  bio,
-  githubusername,
-  twitter,
-  facebook,
-  youtube,
-  linkedin,
-  instagram,
-}) => async (dispatch) => {
+export const createProfile = (formData, history, edit) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
 
-  const body = JSON.stringify({
-    company,
-    status,
-    website,
-    skills,
-    location,
-    bio,
-    githubusername,
-    twitter,
-    facebook,
-    youtube,
-    linkedin,
-    instagram,
-  });
+  const body = JSON.stringify(formData);
 
   try {
     const res = await axios.post('/api/profile', body, config);
@@ -60,7 +34,18 @@ export const createProfile = ({
       type: SAVE_PROFILE,
       payload: res.data,
     });
+
+    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
+
+    if (!edit) {
+      history.push('/dashboard');
+    }
   } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.data },
+    });
+
     const error = err.response.data.errors;
     error.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
   }
