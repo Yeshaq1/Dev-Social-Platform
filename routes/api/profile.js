@@ -292,8 +292,8 @@ router.put(
     [
       body('school', 'school is required').not().isEmpty(),
       body('degree', 'degree name is required').not().isEmpty(),
-      body('from', 'from is required'),
-      body('fieldofstudy', 'field of study is required'),
+      body('from', 'from is required').not().isEmpty(),
+      body('fieldofstudy', 'field of study is required').not().isEmpty(),
     ],
   ],
 

@@ -4,6 +4,7 @@ import {
   CLEAR_PROFILE,
   LOADER_TRUE,
   SAVE_PROFILE,
+  UPDATE_PROFILE,
 } from '../actions/types';
 
 const initialState = {
@@ -25,6 +26,7 @@ export default function (state = initialState, action) {
       };
     case GET_PROFILE:
     case SAVE_PROFILE:
+    case UPDATE_PROFILE:
       return {
         ...state,
         profile: payload,
