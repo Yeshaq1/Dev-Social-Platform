@@ -6,6 +6,7 @@ import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 import Alert from '../layout/Alert';
 import DashboardActions from './DashboardActions';
+import Education from './Education';
 
 const Dashboard = ({
   getProfile,
@@ -37,6 +38,7 @@ const Dashboard = ({
           </Link>
         </Fragment>
       )}
+      <Education />
     </Fragment>
   );
 };
