@@ -2,40 +2,40 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { deleteEducation } from '../../actions/profile';
+import { deleteExperience } from '../../actions/profile';
 
-const Education = ({ education, deleteEducation }) => {
+const Experience = ({ experience, deleteExperience }) => {
   return (
     <Fragment>
-      <h2 className='my-2'>Education Credentials</h2>
+      <h2 className='my-2'>Experience Credentials</h2>
       <table className='table'>
         <thead>
           <tr>
-            <th>School</th>
-            <th className='hide-sm'>Degree</th>
+            <th>Company</th>
+            <th className='hide-sm'>Title</th>
             <th className='hide-sm'>Years</th>
             <th />
           </tr>
         </thead>
         <tbody>
-          {education.map((education) => {
+          {experience.map((exp) => {
             return (
-              <Fragment key={education._id}>
+              <Fragment key={exp._id}>
                 <tr>
-                  <td>{education.school}</td>
-                  <td className='hide-sm'>{education.degree}</td>
+                  <td>{exp.company}</td>
+                  <td className='hide-sm'>{exp.title}</td>
                   <td className='hide-sm'>
-                    <Moment format='YYYY/MM/DD'>{education.from}</Moment> -{' '}
-                    {!education.to ? (
+                    <Moment format='YYYY/MM/DD'>{exp.from}</Moment> -{' '}
+                    {!exp.to ? (
                       'Present'
                     ) : (
-                      <Moment format='YYYY/MM/DD'>{education.to}</Moment>
+                      <Moment format='YYYY/MM/DD'>{exp.to}</Moment>
                     )}
                   </td>
                   <td>
                     <button
                       onClick={() => {
-                        deleteEducation(education._id);
+                        deleteExperience(exp._id);
                       }}
                       className='btn btn-danger'
                     >
@@ -52,13 +52,13 @@ const Education = ({ education, deleteEducation }) => {
   );
 };
 
-Education.propTypes = {
-  education: PropTypes.array.isRequired,
-  deleteEducation: PropTypes.func.isRequired,
+Experience.propTypes = {
+  experience: PropTypes.array.isRequired,
+  deleteExperience: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  education: state.profile.profile.education,
+  experience: state.profile.profile.experience,
 });
 
-export default connect(mapStateToProps, { deleteEducation })(Education);
+export default connect(mapStateToProps, { deleteExperience })(Experience);

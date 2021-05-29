@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const Profile = require('../../models/Profile');
 const User = require('../../models/Users');
+const Post = require('../../models/Post');
 const { body, validationResult } = require('express-validator');
 
 const https = require('https');
@@ -180,6 +181,7 @@ router.delete('/', auth, async (req, res) => {
   }
 
   try {
+    await Post.deleteMany({ user: req.user.id });
     await Profile.deleteOne({
       user: req.user.id,
     });
@@ -217,15 +219,8 @@ router.put(
       });
     }
 
-    const {
-      title,
-      from,
-      current,
-      to,
-      company,
-      location,
-      description,
-    } = req.body;
+    const { title, from, current, to, company, location, description } =
+      req.body;
 
     const newExp = {
       title,
@@ -305,15 +300,8 @@ router.put(
       });
     }
 
-    const {
-      school,
-      from,
-      degree,
-      to,
-      fieldofstudy,
-      description,
-      current,
-    } = req.body;
+    const { school, from, degree, to, fieldofstudy, description, current } =
+      req.body;
 
     const newEdu = {
       school,
