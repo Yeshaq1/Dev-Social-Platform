@@ -5,6 +5,8 @@ import {
   LOADER_TRUE,
   SAVE_PROFILE,
   UPDATE_PROFILE,
+  GET_PROFILES,
+  GET_REPOS,
 } from '../actions/types';
 
 const initialState = {
@@ -49,6 +51,21 @@ export default function (state = initialState, action) {
         repos: [],
         error: {},
       };
+
+    case GET_PROFILES:
+      return {
+        ...state,
+        loading: false,
+        profiles: payload,
+      };
+
+    case GET_REPOS:
+      return {
+        ...state,
+        loading: false,
+        repos: payload,
+      };
+
     default:
       return state;
   }

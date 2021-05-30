@@ -6,8 +6,12 @@ import {
   PROFILE_ERROR,
   SAVE_PROFILE,
   UPDATE_PROFILE,
+  GET_PROFILES,
+  GET_REPOS,
 } from './types';
 import { setAlert } from './alert';
+
+//-----------------------------------------------------------------------------//
 
 export const getProfile = () => async (dispatch) => {
   try {
@@ -24,6 +28,8 @@ export const getProfile = () => async (dispatch) => {
     });
   }
 };
+
+//-----------------------------------------------------------------------------//
 
 export const createProfile = (formData, history, edit) => async (dispatch) => {
   const config = {
@@ -58,6 +64,8 @@ export const createProfile = (formData, history, edit) => async (dispatch) => {
   }
 };
 
+//-----------------------------------------------------------------------------//
+
 // Add Experience
 export const addExperience = (formData, history) => async (dispatch) => {
   const config = {
@@ -89,6 +97,8 @@ export const addExperience = (formData, history) => async (dispatch) => {
     error.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
   }
 };
+
+//-------------------------------------------------------------------------------------//
 
 // Add Education
 export const addEducation = (formData, history) => async (dispatch) => {
@@ -122,6 +132,7 @@ export const addEducation = (formData, history) => async (dispatch) => {
   }
 };
 
+//-----------------------------------------------------------------------------//
 // Delete Experience
 
 export const deleteExperience = (id) => async (dispatch) => {
@@ -142,6 +153,7 @@ export const deleteExperience = (id) => async (dispatch) => {
   }
 };
 
+//-----------------------------------------------------------------------------//
 // Delete Education
 
 export const deleteEducation = (id) => async (dispatch) => {
@@ -161,9 +173,8 @@ export const deleteEducation = (id) => async (dispatch) => {
     });
   }
 };
-
+//-----------------------------------------------------------------------------//
 // Delete Account and Profile
-
 export const deleteAccount = () => async (dispatch) => {
   if (window.confirm('Are you sure? This cannot be undone')) {
     try {
@@ -183,5 +194,60 @@ export const deleteAccount = () => async (dispatch) => {
         payload: { msg: err.response.statusText, status: err.response.data },
       });
     }
+  }
+};
+
+//-----------------------------------------------------------------------------//
+// Get All Profiles
+export const getAllProfiles = () => async (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
+  try {
+    const res = await axios.get('/api/profile');
+
+    dispatch({
+      type: GET_PROFILES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.data },
+    });
+  }
+};
+
+//-----------------------------------------------------------------------------//
+// Get Profile By ID
+export const getProfileById = (userId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/user/${userId}`);
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.data },
+    });
+  }
+};
+
+//-----------------------------------------------------------------------------//
+// Get Github Repos
+export const getGithubRepos = (userName) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profile/github/${userName}`);
+
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.data },
+    });
   }
 };

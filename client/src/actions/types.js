@@ -14,3 +14,5 @@ export const LOADER_TRUE = 'LOADER_TRUE';
 export const SAVE_PROFILE = 'SAVE_PROFILE';
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
+export const GET_PROFILES = 'GET_PROFILES';
+export const GET_REPOS = 'GET_REPOS';
