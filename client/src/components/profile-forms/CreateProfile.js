@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Fragment } from 'react';
 import { createProfile } from '../../actions/profile';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Alert from '../layout/Alert';
+import { Link } from 'react-router-dom';
 
 const CreateProfile = ({ createProfile }) => {
   const [formData, updateFormData] = useState({
@@ -223,9 +224,9 @@ const CreateProfile = ({ createProfile }) => {
         )}
 
         <input type='submit' className='btn btn-primary my-1' />
-        <link className='btn btn-light my-1' href='/dashboard'>
+        <Link className='btn btn-light my-1' to='/dashboard'>
           Go Back
-        </link>
+        </Link>
       </form>
     </Fragment>
   );
