@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Fragment } from 'react';
 import { createProfile } from '../../actions/profile';
 import { useHistory } from 'react-router-dom';
-import Alert from '../layout/Alert';
 import { Link } from 'react-router-dom';
 
 const CreateProfile = ({ createProfile }) => {
