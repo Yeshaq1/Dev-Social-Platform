@@ -207,7 +207,7 @@ router.put(
     [
       body('title', 'title is required').not().isEmpty(),
       body('company', 'company name is required').not().isEmpty(),
-      body('from', 'from is required'),
+      body('from', 'from is required').not().isEmpty(),
     ],
   ],
 

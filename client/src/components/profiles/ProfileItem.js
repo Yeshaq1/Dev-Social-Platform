@@ -12,14 +12,14 @@ const ProfileItem = ({ profile }) => {
           {profile.company && <span> at {profile.company}</span>}
         </p>
         <p>{profile.location}</p>
-        <Link to={`profile/${profile._id}`} className='btn btn-primary'>
+        <Link to={`profile/${profile.user._id}`} className='btn btn-primary'>
           View Profile
         </Link>
       </div>
       <ul>
         {profile.skills.slice(0, 4).map((skill, index) => (
-          <li key={index} class='text-primary'>
-            <i class='fas fa-check'></i> {skill}
+          <li key={index} className='text-primary'>
+            <i className='fas fa-check'></i> {skill}
           </li>
         ))}
       </ul>
