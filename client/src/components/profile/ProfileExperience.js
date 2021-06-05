@@ -1,12 +1,13 @@
 import Moment from 'react-moment';
+import { Fragment } from 'react';
 
 const ProfileExperience = ({ profile: { experience } }) => {
   return (
     <div className='profile-exp bg-white p-2'>
-      <h2 className='text-primary'>Experience</h2>
-
-      {experience
-        ? experience.map((exp, index) => (
+      {experience.length > 0 ? (
+        <Fragment>
+          <h2 className='text-primary'>Experience</h2>
+          {experience.map((exp, index) => (
             <div key={index}>
               <h3 className='text-dark'>{exp.company}</h3>
               <p>
@@ -28,8 +29,11 @@ const ProfileExperience = ({ profile: { experience } }) => {
                 </p>
               )}
             </div>
-          ))
-        : null}
+          ))}
+        </Fragment>
+      ) : (
+        <h4>No Experience Credentials</h4>
+      )}
     </div>
   );
 };

@@ -5,6 +5,7 @@ const Profile = require('../../models/Profile');
 const User = require('../../models/Users');
 const Post = require('../../models/Post');
 const { body, validationResult } = require('express-validator');
+const config = require('config');
 
 const https = require('https');
 
@@ -368,7 +369,11 @@ router.get('/github/:username', async (req, res) => {
       'user-agent': 'node.js',
     },
     host: 'api.github.com',
-    path: `/users/${req.params.username}/repos?type=owner&sort=updated&per_page=5`,
+    path: `/users/${
+      req.params.username
+    }/repos?type=owner&sort=updated&per_page=5&client_id=${config.get(
+      'clientId'
+    )}&client_secret=${config.get('clientSecrets')}`,
     method: 'GET',
   };
   try {
