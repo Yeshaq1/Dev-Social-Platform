@@ -72,7 +72,6 @@ const Login = ({ login, isAuthenticated, loading }) => {
 };
 
 Login.propTypes = {
-  setAlert: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool,
   loading: PropTypes.bool,
