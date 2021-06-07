@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
-import Alert from '../layout/Alert';
 import PropTypes from 'prop-types';
 
 const Login = ({ login, isAuthenticated, loading }) => {
@@ -39,7 +38,6 @@ const Login = ({ login, isAuthenticated, loading }) => {
       <p className='lead'>
         <i className='fas fa-user'></i> Sign Into Your Account
       </p>
-      <Alert />
       <form className='form' onSubmit={submit}>
         <div className='form-group'>
           <input

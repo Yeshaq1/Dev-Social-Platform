@@ -4,7 +4,6 @@ import { getProfile, deleteAccount } from '../../actions/profile';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
-import Alert from '../layout/Alert';
 import DashboardActions from './DashboardActions';
 import Education from './Education';
 import Experience from './Experience';
@@ -23,7 +22,6 @@ const Dashboard = ({
     <Spinner />
   ) : (
     <Fragment>
-      <Alert />
       <h1 className='large text-primary'>Dashboard</h1>
       <p className='lead'>
         <i className='fas fa-user'></i> Welcome {user && user.name}

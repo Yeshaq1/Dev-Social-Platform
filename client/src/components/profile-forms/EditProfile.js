@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Fragment } from 'react';
 import { createProfile } from '../../actions/profile';
 import { useHistory, Link } from 'react-router-dom';
-import Alert from '../layout/Alert';
 import { getProfile } from '../../actions/profile';
 
 const EditProfile = ({
@@ -81,7 +80,6 @@ const EditProfile = ({
 
   return (
     <Fragment>
-      <Alert />
       <h1 className='large text-primary'>Create Your Profile</h1>
       <p className='lead'>
         <i className='fas fa-user'></i> Let's get some information to make your
