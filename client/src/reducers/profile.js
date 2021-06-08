@@ -7,6 +7,7 @@ import {
   UPDATE_PROFILE,
   GET_PROFILES,
   GET_REPOS,
+  REPO_ERROR,
 } from '../actions/types';
 
 const initialState = {
@@ -64,6 +65,13 @@ export default function profileReducer(state = initialState, action) {
         ...state,
         loading: false,
         repos: payload,
+      };
+
+    case REPO_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
       };
 
     default:

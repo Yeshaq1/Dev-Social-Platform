@@ -25,3 +25,4 @@ export const GET_POST = 'GET_POST';
 export const CLEAR_POST = 'CLEAR_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
+export const REPO_ERROR = 'REPO_ERROR';

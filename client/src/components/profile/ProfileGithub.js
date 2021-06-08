@@ -56,9 +56,7 @@ const ProfileGithub = ({
             </Fragment>
           )}
         </div>
-      ) : (
-        <Spinner />
-      )}
+      ) : null}
     </Fragment>
   );
 };

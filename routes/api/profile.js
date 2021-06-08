@@ -382,7 +382,7 @@ router.get('/github/:username', async (req, res) => {
       // SINCE data is recieved as chunks, set up an array to include all the data and only parse the data at the end.
       const reposChunks = [];
       if (response.statusCode !== 200) {
-        return res.json({
+        return res.status(404).json({
           msg: 'profile not found',
         });
       }
